@@ -1,0 +1,154 @@
+{
+  "templates": [
+    {
+      "id": "glass-wall-tempered",
+      "category": "Glass Wall Systems",
+      "title": "Crystal Clear Tempered Glass Wall System",
+      "template": "Supply, fabrication, and installation of {thickness}mm Crystal Clear single tempered glass wall system, full-height ({height}mm x {width}mm), floor-to-ceiling installation, fixed with aluminum profile system. All edges and joints to be finished using the 3M Glass Joint System for a seamless and durable finish.\n\nSize: {height}mm x {width}mm\n\nNotes:\n• Glass to be {thickness}mm Crystal Clear single tempered as per safety standards\n• Profiles in aluminum as per approved project specifications\n• Joints to be executed with 3M Glass Joint System for clarity and precision\n• Access point design to be coordinated with the client/consultant\n• Price inclusive of all materials, accessories, labor, delivery, and installation",
+      "defaultValues": {
+        "thickness": "12",
+        "height": "5000",
+        "width": "3300"
+      }
+    },
+    {
+      "id": "glass-decorative-fusion",
+      "category": "Decorative Glass",
+      "title": "Tempered Fusion Decorative Glass Panels",
+      "template": "Installation of tempered Fusion decorative glass panels, {thickness}mm thick, with custom pattern/design as per approved shop drawings.\n\nSize: {height}mm x {width}mm\n\nNotes:\n• Fusion glass with decorative interlayer as per sample approval\n• Tempered to EN12150 standards\n• All edges polished and safety beveled\n• Installation with approved fixing system\n• Price inclusive of materials, fabrication, delivery, and installation",
+      "defaultValues": {
+        "thickness": "10",
+        "height": "3000",
+        "width": "2000"
+      }
+    },
+    {
+      "id": "aluminum-cladding",
+      "category": "Aluminum Cladding",
+      "title": "Aluminum Composite Panel Cladding",
+      "template": "Supply and installation of {brand} Aluminum Composite Panel (ACP) cladding system, {thickness}mm thickness, color: {color}.\n\nCoverage Area: {area} sqm\n\nNotes:\n• ACP panels with approved fire rating\n• Complete aluminum substructure and framing\n• Weather-resistant sealant joints\n• Factory applied finish with warranty\n• Includes all fixing accessories, flashings, and trims\n• Price inclusive of materials, labor, delivery, and installation",
+      "defaultValues": {
+        "brand": "Alucobond/Alpolic",
+        "thickness": "4",
+        "color": "RAL 9006 Silver",
+        "area": "100"
+      }
+    },
+    {
+      "id": "aluminum-windows",
+      "category": "Windows & Doors",
+      "title": "Aluminum Windows with Double Glazing",
+      "template": "Supply, fabrication, and installation of aluminum framed windows, powder-coated finish (color: {color}), with double glazed units (DGU) {glassSpec}.\n\nQuantity: {quantity} windows\nAverage Size: {height}mm x {width}mm\n\nNotes:\n• Aluminum profiles as per approved system\n• Hardware: {hardware}\n• Weather seals and gaskets included\n• Installation as per architectural drawings\n• Price inclusive of all materials, accessories, labor, delivery, and installation",
+      "defaultValues": {
+        "color": "RAL 9016 White",
+        "glassSpec": "6mm clear + 12mm air gap + 6mm clear",
+        "quantity": "10",
+        "height": "1500",
+        "width": "1200",
+        "hardware": "European standard locks and handles"
+      }
+    },
+    {
+      "id": "glass-door-frameless",
+      "category": "Doors",
+      "title": "Frameless Glass Door System",
+      "template": "Supply and installation of {thickness}mm tempered glass frameless door system with patch fittings and floor spring/closer.\n\nSize: {height}mm x {width}mm\nQuantity: {quantity} door(s)\n\nNotes:\n• Tempered glass to EN12150 standards\n• Stainless steel patch fittings (grade 304/316)\n• Heavy-duty floor spring with hold-open function\n• Pull handles in brushed stainless steel\n• All edges polished and safety beveled\n• Price inclusive of materials, hardware, labor, delivery, and installation",
+      "defaultValues": {
+        "thickness": "12",
+        "height": "2400",
+        "width": "1000",
+        "quantity": "1"
+      }
+    },
+    {
+      "id": "glass-railing",
+      "category": "Railings",
+      "title": "Glass Railing System",
+      "template": "Supply and installation of glass railing system with {thickness}mm tempered glass panels, {mountType} mounted.\n\nTotal Length: {length} meters\nHeight: {height}mm\n\nNotes:\n• Tempered glass to EN12150 standards\n• Stainless steel channels/clamps (grade 304/316)\n• All edges polished and safety beveled\n• Structural silicone where applicable\n• Installation as per structural drawings and local building codes\n• Price inclusive of materials, fixings, labor, delivery, and installation",
+      "defaultValues": {
+        "thickness": "12",
+        "mountType": "channel",
+        "length": "10",
+        "height": "1100"
+      }
+    },
+    {
+      "id": "aluminum-curtain-wall",
+      "category": "Curtain Wall",
+      "title": "Aluminum Curtain Wall System",
+      "template": "Supply, fabrication, and installation of aluminum curtain wall system, {system} type, with {glassSpec} glazing.\n\nCoverage Area: {area} sqm\n\nNotes:\n• Aluminum curtain wall system as per approved shop drawings\n• Structural calculations and wind load analysis included\n• Thermal break system for energy efficiency\n• Weather testing certified system\n• Complete with all accessories, sealants, and flashings\n• Price inclusive of engineering, materials, fabrication, delivery, and installation",
+      "defaultValues": {
+        "system": "unitized/stick",
+        "glassSpec": "24mm DGU (6mm + 12mm + 6mm Low-E)",
+        "area": "500"
+      }
+    },
+    {
+      "id": "skylight-glass",
+      "category": "Skylights",
+      "title": "Glass Skylight System",
+      "template": "Supply and installation of glass skylight system with aluminum framing and {glassSpec} glazing.\n\nSize: {length}mm x {width}mm\n\nNotes:\n• Laminated safety glass for overhead glazing\n• Aluminum structural framework with thermal break\n• EPDM weather seals and gaskets\n• Condensation drainage system\n• UV protection coating\n• Price inclusive of materials, structural supports, labor, delivery, and installation",
+      "defaultValues": {
+        "glassSpec": "8mm + 1.52 PVB + 8mm laminated tempered",
+        "length": "6000",
+        "width": "4000"
+      }
+    },
+    {
+      "id": "shower-enclosure",
+      "category": "Shower Enclosures",
+      "title": "Frameless Shower Enclosure",
+      "template": "Supply and installation of frameless shower enclosure with {thickness}mm clear tempered glass panels.\n\nConfiguration: {config}\nSize: {height}mm height, {width}mm x {depth}mm floor area\n\nNotes:\n• Tempered glass to EN12150 standards\n• Stainless steel hinges and handles (grade 304)\n• Chrome-plated fittings\n• Magnetic door seals\n• All edges polished\n• Price inclusive of materials, hardware, labor, delivery, and installation",
+      "defaultValues": {
+        "thickness": "10",
+        "config": "hinged door with fixed panel",
+        "height": "2000",
+        "width": "1200",
+        "depth": "900"
+      }
+    },
+    {
+      "id": "mirror-installation",
+      "category": "Mirrors",
+      "title": "Mirror Supply and Installation",
+      "template": "Supply and installation of {thickness}mm clear mirror with polished edges.\n\nTotal Area: {area} sqm\n\nNotes:\n• Clear silver mirror, copper-free backing\n• All edges polished and safety beveled\n• Installation with approved mirror adhesive and mechanical fixings\n• Protective coating on back\n• Price inclusive of materials, labor, delivery, and installation",
+      "defaultValues": {
+        "thickness": "6",
+        "area": "15"
+      }
+    },
+    {
+      "id": "aluminum-louvers",
+      "category": "Louvers & Screens",
+      "title": "Aluminum Louver System",
+      "template": "Supply and installation of extruded aluminum louver system, blade size: {bladeSize}mm, finish: {finish}.\n\nCoverage Area: {area} sqm\n\nNotes:\n• Extruded aluminum louvers with structural framing\n• Powder-coated finish as per approved color\n• Fixed/operable as per design requirements\n• Wind load calculations included\n• Price inclusive of materials, fabrication, labor, delivery, and installation",
+      "defaultValues": {
+        "bladeSize": "100",
+        "finish": "powder-coated RAL 9006",
+        "area": "50"
+      }
+    },
+    {
+      "id": "glass-partition",
+      "category": "Partitions",
+      "title": "Glass Office Partition System",
+      "template": "Supply and installation of glass partition system with aluminum framing, {thickness}mm tempered glass panels.\n\nTotal Length: {length} meters\nHeight: {height}mm\n\nNotes:\n• Tempered glass to safety standards\n• Aluminum profiles in approved finish\n• Include door(s) as per layout\n• Cable management provisions if required\n• Demountable system for future reconfiguration\n• Price inclusive of materials, labor, delivery, and installation",
+      "defaultValues": {
+        "thickness": "10",
+        "length": "20",
+        "height": "3000"
+      }
+    },
+    {
+      "id": "canopy-entrance",
+      "category": "Canopies",
+      "title": "Glass & Aluminum Entrance Canopy",
+      "template": "Supply, fabrication, and installation of entrance canopy with aluminum structure and {glassSpec} glass canopy.\n\nSize: {length}mm x {projection}mm\n\nNotes:\n• Structural aluminum framework with connections\n• Laminated tempered glass for overhead application\n• Stainless steel spider fittings where applicable\n• Weather sealing and drainage system\n• Structural calculations and approvals included\n• Price inclusive of engineering, materials, fabrication, delivery, and installation",
+      "defaultValues": {
+        "glassSpec": "10mm + 1.52 PVB + 10mm laminated tempered",
+        "length": "8000",
+        "projection": "2500"
+      }
+    }
+  ]
+}
