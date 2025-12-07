@@ -1,9 +1,9 @@
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 
 export default async function QuotationsPage() {
-  const quotations = await db.quotation.findMany({
+  const quotations = await prisma.quotation.findMany({
     include: {
       customer: true,
       createdBy: true,

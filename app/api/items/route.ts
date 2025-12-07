@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
 const itemSchema = z.object({
@@ -21,7 +21,10 @@ export async function GET(req: NextRequest) {
     if (category) where.category = category;
     if (activeOnly) where.isActive = true;
 
-    const items = await db.itemCatalog.findMany(where);
+    const items = await prisma.itemCatalog.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+    });
 
     return NextResponse.json(items);
   } catch (error) {
@@ -38,13 +41,15 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const validatedData = itemSchema.parse(body);
 
-    const item = await db.itemCatalog.create({
-      category: validatedData.category,
-      name: validatedData.name,
-      description: validatedData.description || null,
-      unit: validatedData.unit,
-      defaultRate: validatedData.defaultRate,
-      isActive: validatedData.isActive ?? true,
+    const item = await prisma.itemCatalog.create({
+      data: {
+        category: validatedData.category,
+        name: validatedData.name,
+        description: validatedData.description || null,
+        unit: validatedData.unit,
+        defaultRate: validatedData.defaultRate,
+        isActive: validatedData.isActive ?? true,
+      },
     });
 
     return NextResponse.json(item, { status: 201 });

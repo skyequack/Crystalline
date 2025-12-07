@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
+import { currentUser } from "@clerk/nextjs/server";
 import { z } from "zod";
 
 const quotationSchema = z.object({
@@ -38,7 +39,7 @@ export async function GET(req: NextRequest) {
     if (status) where.status = status;
     if (customerId) where.customerId = customerId;
 
-    const quotations = await db.quotation.findMany({
+    const quotations = await prisma.quotation.findMany({
       where,
       include: {
         customer: true,
@@ -60,18 +61,43 @@ export async function GET(req: NextRequest) {
 
 // POST /api/quotations - Create new quotation
 export async function POST(req: NextRequest) {
+  // Get current user from Clerk
+  const user = await currentUser();
+  if (!user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Ensure user exists in database
+  let dbUser = await prisma.user.findUnique({
+    where: { clerkId: user.id },
+  });
+
+  if (!dbUser) {
+    dbUser = await prisma.user.create({
+      data: {
+        clerkId: user.id,
+        name:
+          `${user.firstName || ""} ${user.lastName || ""}`.trim() ||
+          user.username ||
+          "User",
+        email: user.emailAddresses[0]?.emailAddress || "",
+      },
+    });
+  }
+
   try {
     const body = await req.json();
     const validatedData = quotationSchema.parse(body);
 
     // Get the last quotation number
-    const lastQuotation = await db.quotation.findFirst({
+    const lastQuotation = await prisma.quotation.findFirst({
       orderBy: { createdAt: "desc" },
-      select: { quotationNumber: true },
     });
 
     // Generate new quotation number
-    const settings = await db.settings.findUnique("quotation_prefix");
+    const settings = await prisma.settings.findUnique({
+      where: { key: "quotation_prefix" },
+    });
     const prefix = settings?.value || "CRY";
 
     let nextNumber = 1;
@@ -88,14 +114,18 @@ export async function POST(req: NextRequest) {
     // Get default VAT percentage if not provided
     let vatPercentage = validatedData.vatPercentage || 5;
     if (!validatedData.vatPercentage) {
-      const vatSetting = await db.settings.findUnique("vat_percentage");
+      const vatSetting = await prisma.settings.findUnique({
+        where: { key: "vat_percentage" },
+      });
       vatPercentage = parseFloat(vatSetting?.value || "5");
     }
 
     // Get default terms if not provided
     let terms = validatedData.terms;
     if (!terms) {
-      const termsSetting = await db.settings.findUnique("quotation_terms");
+      const termsSetting = await prisma.settings.findUnique({
+        where: { key: "quotation_terms" },
+      });
       terms = termsSetting?.value || "";
     }
 
@@ -108,7 +138,7 @@ export async function POST(req: NextRequest) {
     const total = subtotal + vatAmount;
 
     // Create quotation with items
-    const quotation = await db.quotation.create({
+    const quotation = await prisma.quotation.create({
       data: {
         quotationNumber,
         customerId: validatedData.customerId,
@@ -121,7 +151,7 @@ export async function POST(req: NextRequest) {
         total,
         notes: validatedData.notes || null,
         terms,
-        createdById: "1",
+        createdById: dbUser.id,
         items: {
           create: validatedData.items.map((item, index) => ({
             ...item,

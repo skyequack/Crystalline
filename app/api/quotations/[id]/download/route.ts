@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { generateQuotationExcel } from "@/lib/excel-generator";
 
 export async function GET(
@@ -7,10 +7,13 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const quotation = await db.quotation.findUnique(params.id, {
+    const quotation = await prisma.quotation.findUnique({
+      where: { id: params.id },
       include: {
         customer: true,
-        items: true,
+        items: {
+          orderBy: { sortOrder: "asc" },
+        },
       },
     });
 

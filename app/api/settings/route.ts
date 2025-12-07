@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    const settings = await db.settings.findMany();
+    const settings = await prisma.settings.findMany();
 
     const settingsMap = settings.reduce((acc, setting) => {
       acc[setting.key] = setting.value;
@@ -32,7 +32,7 @@ export async function PATCH(req: NextRequest) {
       );
     }
 
-    const setting = await db.settings.upsert({
+    const setting = await prisma.settings.upsert({
       where: { key },
       update: { value },
       create: { key, value },

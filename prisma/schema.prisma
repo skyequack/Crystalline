@@ -1,0 +1,118 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String      @id @default(cuid())
+  clerkId    String      @unique
+  name       String
+  email      String      @unique
+  role       Role        @default(ESTIMATOR)
+  quotations Quotation[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+enum Role {
+  ADMIN
+  ESTIMATOR
+}
+
+model Customer {
+  id            String      @id @default(cuid())
+  companyName   String
+  contactPerson String?
+  phone         String?
+  email         String?
+  address       String?
+  quotations    Quotation[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model ItemCatalog {
+  id          String   @id @default(cuid())
+  category    Category
+  name        String
+  description String?
+  unit        String
+  defaultRate Float
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum Category {
+  GLASS
+  ALUMINUM
+  HARDWARE
+  LABOR
+  MISC
+}
+
+model Quotation {
+  id              String           @id @default(cuid())
+  quotationNumber String           @unique
+  customerId      String
+  customer        Customer         @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  projectName     String
+  siteLocation    String?
+  status          QuotationStatus  @default(DRAFT)
+  subtotal        Float
+  vatPercentage   Float
+  vatAmount       Float
+  total           Float
+  notes           String?
+  terms           String?
+  createdById     String
+  createdBy       User             @relation(fields: [createdById], references: [id])
+  items           QuotationItem[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([customerId])
+  @@index([createdById])
+  @@index([status])
+}
+
+enum QuotationStatus {
+  DRAFT
+  SENT
+  REVISED
+  APPROVED
+  REJECTED
+}
+
+model QuotationItem {
+  id          String    @id @default(cuid())
+  quotationId String
+  quotation   Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  scopeOfWork String
+  description String?
+  quantity    Float
+  rate        Float
+  vatRate     Float
+  subTotal    Float
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([quotationId])
+}
+
+model Settings {
+  key         String   @id
+  value       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+

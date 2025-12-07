@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { FileText, Users, Package, TrendingUp } from "lucide-react";
 
@@ -6,20 +6,20 @@ export default async function DashboardPage() {
   // Fetch statistics
   const [totalQuotations, draftQuotations, customers, items] =
     await Promise.all([
-      db.quotation.count(),
-      db.quotation.count({ where: { status: "DRAFT" } }),
-      db.customer.count(),
-      db.itemCatalog.count({ isActive: true }),
+      prisma.quotation.count(),
+      prisma.quotation.count({ where: { status: "DRAFT" } }),
+      prisma.customer.count(),
+      prisma.itemCatalog.count({ where: { isActive: true } }),
     ]);
 
   // Fetch recent quotations
-  const allQuotations = await db.quotation.findMany({
+  const recentQuotations = await prisma.quotation.findMany({
+    take: 5,
     include: {
       customer: true,
     },
     orderBy: { createdAt: "desc" },
   });
-  const recentQuotations = allQuotations.slice(0, 5);
 
   const stats = [
     {

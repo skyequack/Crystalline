@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
 const updateSchema = z.object({
@@ -34,11 +34,14 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const quotation = await db.quotation.findUnique(params.id, {
+    const quotation = await prisma.quotation.findUnique({
+      where: { id: params.id },
       include: {
         customer: true,
         createdBy: true,
-        items: true,
+        items: {
+          orderBy: { sortOrder: "asc" },
+        },
       },
     });
 
@@ -69,7 +72,8 @@ export async function PATCH(
     const validatedData = updateSchema.parse(body);
 
     // Check if quotation exists
-    const existingQuotation = await db.quotation.findUnique(params.id, {
+    const existingQuotation = await prisma.quotation.findUnique({
+      where: { id: params.id },
       include: { items: true },
     });
 
@@ -111,13 +115,14 @@ export async function PATCH(
       updateData.total = total;
 
       // Delete existing items and create new ones
-      await db.quotationItem.deleteMany({
+      await prisma.quotationItem.deleteMany({
         where: { quotationId: params.id },
       });
     }
 
     // Update quotation
-    const quotation = await db.quotation.update(params.id, {
+    const quotation = await prisma.quotation.update({
+      where: { id: params.id },
       data: {
         ...updateData,
         ...(validatedData.items && {
@@ -137,7 +142,9 @@ export async function PATCH(
       include: {
         customer: true,
         createdBy: true,
-        items: true,
+        items: {
+          orderBy: { sortOrder: "asc" },
+        },
       },
     });
 
@@ -163,7 +170,9 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    await db.quotation.delete(params.id);
+    await prisma.quotation.delete({
+      where: { id: params.id },
+    });
 
     return NextResponse.json({ message: "Quotation deleted successfully" });
   } catch (error) {
