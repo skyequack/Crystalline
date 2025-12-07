@@ -3,7 +3,9 @@ import { prisma } from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 import { z } from "zod";
 
-type QuotationWhereInput = NonNullable<Parameters<typeof prisma.quotation.findMany>[0]>["where"];
+type QuotationWhereInput = NonNullable<
+  Parameters<typeof prisma.quotation.findMany>[0]
+>["where"];
 
 const quotationSchema = z.object({
   customerId: z.string(),
@@ -38,8 +40,16 @@ export async function GET(req: NextRequest) {
     const customerId = searchParams.get("customerId");
 
     const where: QuotationWhereInput = {};
-    if (status && ["DRAFT", "SENT", "REVISED", "APPROVED", "REJECTED"].includes(status)) {
-      where.status = status as "DRAFT" | "SENT" | "REVISED" | "APPROVED" | "REJECTED";
+    if (
+      status &&
+      ["DRAFT", "SENT", "REVISED", "APPROVED", "REJECTED"].includes(status)
+    ) {
+      where.status = status as
+        | "DRAFT"
+        | "SENT"
+        | "REVISED"
+        | "APPROVED"
+        | "REJECTED";
     }
     if (customerId) where.customerId = customerId;
 

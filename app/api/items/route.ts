@@ -21,8 +21,16 @@ export async function GET(req: NextRequest) {
     const activeOnly = searchParams.get("active") === "true";
 
     const where: ItemWhereInput = {};
-    if (category && ["GLASS", "ALUMINUM", "HARDWARE", "LABOR", "MISC"].includes(category)) {
-      where.category = category as "GLASS" | "ALUMINUM" | "HARDWARE" | "LABOR" | "MISC";
+    if (
+      category &&
+      ["GLASS", "ALUMINUM", "HARDWARE", "LABOR", "MISC"].includes(category)
+    ) {
+      where.category = category as
+        | "GLASS"
+        | "ALUMINUM"
+        | "HARDWARE"
+        | "LABOR"
+        | "MISC";
     }
     if (activeOnly) where.isActive = true;
 

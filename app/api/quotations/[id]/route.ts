@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
-type QuotationUpdateInput = NonNullable<Parameters<typeof prisma.quotation.update>[0]>["data"];
+type QuotationUpdateInput = NonNullable<
+  Parameters<typeof prisma.quotation.update>[0]
+>["data"];
 
 const updateSchema = z.object({
   customerId: z.string().optional(),
@@ -99,7 +101,9 @@ export async function PATCH(
 
     // Remove undefined values
     Object.keys(updateData).forEach(
-      (key) => updateData[key as keyof QuotationUpdateInput] === undefined && delete updateData[key as keyof QuotationUpdateInput]
+      (key) =>
+        updateData[key as keyof QuotationUpdateInput] === undefined &&
+        delete updateData[key as keyof QuotationUpdateInput]
     );
 
     if (validatedData.items) {
