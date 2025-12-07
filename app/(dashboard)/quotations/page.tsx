@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Plus } from "lucide-react";
 import QuotationsTable from "./quotations-table";
 
+export const dynamic = "force-dynamic";
+
 export default async function QuotationsPage() {
   const quotations = await prisma.quotation.findMany({
     include: {

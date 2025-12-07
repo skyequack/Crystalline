@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
@@ -179,6 +180,9 @@ export async function DELETE(
     await prisma.quotation.delete({
       where: { id: params.id },
     });
+
+    revalidatePath("/dashboard");
+    revalidatePath("/quotations");
 
     return NextResponse.json({ message: "Quotation deleted successfully" });
   } catch (error) {

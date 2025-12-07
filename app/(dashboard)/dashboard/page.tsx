@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { FileText, Users, Package, TrendingUp } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   // Fetch statistics
   const [totalQuotations, draftQuotations, customers, items] =
