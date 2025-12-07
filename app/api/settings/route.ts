@@ -5,10 +5,13 @@ export async function GET() {
   try {
     const settings = await prisma.settings.findMany();
 
-    const settingsMap = settings.reduce((acc, setting) => {
-      acc[setting.key] = setting.value;
-      return acc;
-    }, {} as Record<string, string>);
+    const settingsMap = settings.reduce<Record<string, string>>(
+      (acc, setting) => {
+        acc[setting.key] = setting.value;
+        return acc;
+      },
+      {}
+    );
 
     return NextResponse.json(settingsMap);
   } catch (error) {
