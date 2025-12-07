@@ -141,6 +141,22 @@ function generateId(): string {
 }
 
 // Export store methods
+type QuotationInclude = {
+  customer?: boolean;
+  createdBy?: boolean;
+  items?: boolean;
+};
+
+type QuotationOrderBy = Partial<Record<keyof Quotation, "asc" | "desc">>;
+
+type QuotationFindManyOptions = {
+  where?: { status?: Quotation["status"]; customerId?: string };
+  include?: QuotationInclude;
+  orderBy?: QuotationOrderBy;
+};
+
+type QuotationSelect = Partial<Record<keyof Quotation, boolean>>;
+
 export const db = {
   user: {
     findFirst: () => users[0],
@@ -179,11 +195,7 @@ export const db = {
     },
   },
   quotation: {
-    findMany: (options?: {
-      where?: { status?: string; customerId?: string };
-      include?: any;
-      orderBy?: any;
-    }) => {
+    findMany: (options?: QuotationFindManyOptions) => {
       let result = quotations;
       if (options?.where?.status) {
         result = result.filter((q) => q.status === options?.where?.status);
@@ -203,7 +215,7 @@ export const db = {
       }
       return result;
     },
-    findUnique: (idOrNumber: string, options?: { include?: any }) => {
+    findUnique: (idOrNumber: string, options?: { include?: QuotationInclude }) => {
       // Allow lookup by internal id or human-friendly quotation number
       const quotation = quotations.find(
         (q) => q.id === idOrNumber || q.quotationNumber === idOrNumber
@@ -221,7 +233,7 @@ export const db = {
       }
       return quotation;
     },
-    findFirst: (options?: { orderBy?: any; select?: any }) => {
+    findFirst: (options?: { orderBy?: QuotationOrderBy; select?: QuotationSelect }) => {
       if (quotations.length === 0) return null;
       return quotations[quotations.length - 1];
     },
@@ -229,7 +241,7 @@ export const db = {
       data: Omit<Quotation, "id" | "createdAt" | "updatedAt"> & {
         items?: { create: Omit<QuotationItem, "id" | "quotationId">[] };
       };
-      include?: any;
+      include?: QuotationInclude;
     }) => {
       const { items: itemsData, ...quotationData } = data.data;
       const quotation: Quotation = {
@@ -267,7 +279,7 @@ export const db = {
         data: Partial<Quotation> & {
           items?: { create: Omit<QuotationItem, "id" | "quotationId">[] };
         };
-        include?: any;
+        include?: QuotationInclude;
       }
     ) => {
       const index = quotations.findIndex((q) => q.id === id);

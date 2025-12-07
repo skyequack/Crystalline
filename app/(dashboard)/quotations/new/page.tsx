@@ -77,22 +77,30 @@ export default function NewQuotationPage() {
     setItems(items.filter((_, i) => i !== index));
   };
 
-  const updateItem = (
+  const updateItem = <K extends keyof QuotationItem>(
     index: number,
-    field: keyof QuotationItem,
-    value: any
+    field: K,
+    value: QuotationItem[K] | string
   ) => {
-    const newItems = [...items];
-    newItems[index] = { ...newItems[index], [field]: value };
+    const isNumericField = field === "quantity" || field === "rate";
+    const normalizedValue =
+      isNumericField && typeof value === "string"
+        ? parseFloat(value) || 0
+        : value;
 
-    // Recalculate
-    if (field === "quantity" || field === "rate") {
+    const newItems = [...items];
+    newItems[index] = {
+      ...newItems[index],
+      [field]: normalizedValue,
+    } as QuotationItem;
+
+    if (isNumericField) {
       const qty =
         field === "quantity"
-          ? parseFloat(value) || 0
+          ? (normalizedValue as number)
           : newItems[index].quantity;
       const rate =
-        field === "rate" ? parseFloat(value) || 0 : newItems[index].rate;
+        field === "rate" ? (normalizedValue as number) : newItems[index].rate;
       const subtotal = qty * rate;
       const vatAmount = subtotal * (vatPercentage / 100);
 

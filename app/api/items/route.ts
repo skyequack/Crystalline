@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
+import type { Prisma } from "@prisma/client";
 
 const itemSchema = z.object({
   category: z.enum(["GLASS", "ALUMINUM", "HARDWARE", "LABOR", "MISC"]),
@@ -17,7 +18,7 @@ export async function GET(req: NextRequest) {
     const category = searchParams.get("category");
     const activeOnly = searchParams.get("active") === "true";
 
-    const where: any = {};
+    const where: Prisma.ItemCatalogWhereInput = {};
     if (category) where.category = category;
     if (activeOnly) where.isActive = true;
 

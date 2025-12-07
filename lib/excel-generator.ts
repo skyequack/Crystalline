@@ -1,14 +1,13 @@
-import ExcelJS from "exceljs";
-import { Quotation, QuotationItem, Customer } from "./db";
+import type { Prisma } from "@prisma/client";
 
-type QuotationWithRelations = Quotation & {
-  customer: Customer;
-  items: QuotationItem[];
-};
+type QuotationWithRelations = Prisma.QuotationGetPayload<{
+  include: { customer: true; items: true };
+}>;
 
 export async function generateQuotationExcel(
   quotation: QuotationWithRelations
 ): Promise<Buffer> {
+  const ExcelJS = (await import("exceljs")).default;
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet("Quotation");
 

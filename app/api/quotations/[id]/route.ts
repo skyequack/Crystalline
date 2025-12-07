@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
+import type { Prisma } from "@prisma/client";
 
 const updateSchema = z.object({
   customerId: z.string().optional(),
@@ -85,7 +86,7 @@ export async function PATCH(
     }
 
     // Calculate new totals if items are updated
-    let updateData: any = {
+    let updateData: Prisma.QuotationUncheckedUpdateInput = {
       customerId: validatedData.customerId,
       projectName: validatedData.projectName,
       siteLocation: validatedData.siteLocation,

@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { FileText, Users, Package, TrendingUp } from "lucide-react";
+import type { Prisma } from "@prisma/client";
 
 export default async function DashboardPage() {
   // Fetch statistics
@@ -20,6 +21,10 @@ export default async function DashboardPage() {
     },
     orderBy: { createdAt: "desc" },
   });
+
+  type RecentQuotation = Prisma.QuotationGetPayload<{
+    include: { customer: true };
+  }>;
 
   const stats = [
     {
@@ -142,7 +147,7 @@ export default async function DashboardPage() {
                   </td>
                 </tr>
               ) : (
-                recentQuotations.map((quotation: any) => (
+                recentQuotations.map((quotation: RecentQuotation) => (
                   <tr key={quotation.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <Link
@@ -156,7 +161,7 @@ export default async function DashboardPage() {
                       {quotation.projectName}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {(quotation as any).customer?.companyName || "N/A"}
+                      {quotation.customer?.companyName || "N/A"}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       AED{" "}

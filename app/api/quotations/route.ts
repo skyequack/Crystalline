@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 import { z } from "zod";
+import type { Prisma } from "@prisma/client";
 
 const quotationSchema = z.object({
   customerId: z.string(),
@@ -35,7 +36,7 @@ export async function GET(req: NextRequest) {
     const status = searchParams.get("status");
     const customerId = searchParams.get("customerId");
 
-    const where: any = {};
+    const where: Prisma.QuotationWhereInput = {};
     if (status) where.status = status;
     if (customerId) where.customerId = customerId;
 
