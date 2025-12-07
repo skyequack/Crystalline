@@ -142,47 +142,45 @@ export default async function DashboardPage() {
                   </td>
                 </tr>
               ) : (
-                recentQuotations.map(
-                  (quotation: any) => (
-                    <tr key={quotation.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <Link
-                          href={`/quotations/${quotation.id}`}
-                          className="text-blue-600 hover:text-blue-800 font-medium"
-                        >
-                          {quotation.quotationNumber}
-                        </Link>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {quotation.projectName}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {(quotation as any).customer?.companyName || "N/A"}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        AED{" "}
-                        {parseFloat(quotation.total.toString()).toLocaleString(
-                          "en-US",
-                          { minimumFractionDigits: 2 }
-                        )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                          className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            statusColors[quotation.status]
-                          }`}
-                        >
-                          {quotation.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(quotation.createdAt).toLocaleDateString(
-                          "en-GB"
-                        )}
-                      </td>
-                    </tr>
-                  )
-                )
+                recentQuotations.map((quotation: any) => (
+                  <tr key={quotation.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Link
+                        href={`/quotations/${quotation.id}`}
+                        className="text-blue-600 hover:text-blue-800 font-medium"
+                      >
+                        {quotation.quotationNumber}
+                      </Link>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {quotation.projectName}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {(quotation as any).customer?.companyName || "N/A"}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      AED{" "}
+                      {parseFloat(quotation.total.toString()).toLocaleString(
+                        "en-US",
+                        { minimumFractionDigits: 2 }
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span
+                        className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          statusColors[quotation.status]
+                        }`}
+                      >
+                        {quotation.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {new Date(quotation.createdAt).toLocaleDateString(
+                        "en-GB"
+                      )}
+                    </td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
