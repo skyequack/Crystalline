@@ -30,7 +30,9 @@ export async function GET(
       include: { customer: true; items: true };
     }>;
 
-    const buffer = await generateQuotationExcel(quotation as QuotationWithRelations);
+    const buffer = await generateQuotationExcel(
+      quotation as QuotationWithRelations
+    );
 
     // Set response headers for file download
     const filename = `Quotation_${

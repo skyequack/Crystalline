@@ -215,7 +215,10 @@ export const db = {
       }
       return result;
     },
-    findUnique: (idOrNumber: string, options?: { include?: QuotationInclude }) => {
+    findUnique: (
+      idOrNumber: string,
+      options?: { include?: QuotationInclude }
+    ) => {
       // Allow lookup by internal id or human-friendly quotation number
       const quotation = quotations.find(
         (q) => q.id === idOrNumber || q.quotationNumber === idOrNumber
@@ -233,7 +236,10 @@ export const db = {
       }
       return quotation;
     },
-    findFirst: (options?: { orderBy?: QuotationOrderBy; select?: QuotationSelect }) => {
+    findFirst: (options?: {
+      orderBy?: QuotationOrderBy;
+      select?: QuotationSelect;
+    }) => {
       if (quotations.length === 0) return null;
       return quotations[quotations.length - 1];
     },
