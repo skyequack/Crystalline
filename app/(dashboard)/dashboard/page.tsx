@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { FileText, Users, Package, TrendingUp } from "lucide-react";
-import type { Prisma } from "@prisma/client";
 
 export default async function DashboardPage() {
   // Fetch statistics
@@ -22,9 +21,7 @@ export default async function DashboardPage() {
     orderBy: { createdAt: "desc" },
   });
 
-  type RecentQuotation = Prisma.QuotationGetPayload<{
-    include: { customer: true };
-  }>;
+  type RecentQuotation = (typeof recentQuotations)[number];
 
   const stats = [
     {
