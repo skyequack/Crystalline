@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { generateQuotationExcel } from "@/lib/excel-generator";
-import type { Prisma } from "@prisma/client";
 
 export async function GET(
   req: NextRequest,
@@ -26,9 +25,7 @@ export async function GET(
     }
 
     // Generate Excel file
-    type QuotationWithRelations = Prisma.QuotationGetPayload<{
-      include: { customer: true; items: true };
-    }>;
+    type QuotationWithRelations = NonNullable<typeof quotation>;
 
     const buffer = await generateQuotationExcel(
       quotation as QuotationWithRelations
@@ -39,7 +36,7 @@ export async function GET(
       quotation.quotationNumber
     }_${quotation.projectName.replace(/[^a-zA-Z0-9]/g, "_")}.xlsx`;
 
-    return new NextResponse(buffer, {
+    return new NextResponse(buffer as unknown as BodyInit, {
       headers: {
         "Content-Type":
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

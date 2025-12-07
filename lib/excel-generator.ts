@@ -1,8 +1,36 @@
-import type { Prisma } from "@prisma/client";
-
-type QuotationWithRelations = Prisma.QuotationGetPayload<{
-  include: { customer: true; items: true };
-}>;
+type QuotationWithRelations = {
+  id: string;
+  quotationNumber: string;
+  projectName: string;
+  siteLocation: string | null;
+  status: string;
+  subtotal: number;
+  vatPercentage: number;
+  vatAmount: number;
+  total: number;
+  notes: string | null;
+  terms: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  customer: {
+    id: string;
+    companyName: string;
+    contactPerson: string | null;
+    phone: string | null;
+    email: string | null;
+    address: string | null;
+  };
+  items: Array<{
+    id: string;
+    scopeOfWork: string;
+    description: string | null;
+    quantity: number;
+    rate: number;
+    vatRate: number;
+    subTotal: number;
+    sortOrder: number;
+  }>;
+};
 
 export async function generateQuotationExcel(
   quotation: QuotationWithRelations
