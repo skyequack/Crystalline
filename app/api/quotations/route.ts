@@ -113,15 +113,28 @@ export async function POST(req: NextRequest) {
       where: { key: "quotation_prefix" },
     });
     const prefix = settings?.value || "CRY";
+    const currentYear = new Date().getFullYear();
+
+    // Get the highest sequence number for the current year
+    const quotationsThisYear = await prisma.quotation.findMany({
+      where: {
+        quotationNumber: {
+          startsWith: `${prefix}-${currentYear}-`,
+        },
+      },
+      orderBy: { quotationNumber: "desc" },
+      take: 1,
+    });
 
     let nextNumber = 1;
-    if (lastQuotation) {
-      const lastNumber = parseInt(
-        lastQuotation.quotationNumber.replace(/\D/g, "")
-      );
-      nextNumber = lastNumber + 1;
+    if (quotationsThisYear.length > 0) {
+      // Extract only the last 4 digits from format PREFIX-YYYY-NNNN
+      const match = quotationsThisYear[0].quotationNumber.match(/-(\d{1,4})$/);
+      if (match) {
+        nextNumber = parseInt(match[1], 10) + 1;
+      }
     }
-    const quotationNumber = `${prefix}-${new Date().getFullYear()}-${String(
+    const quotationNumber = `${prefix}-${currentYear}-${String(
       nextNumber
     ).padStart(4, "0")}`;
 
