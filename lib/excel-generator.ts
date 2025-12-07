@@ -151,17 +151,17 @@ export async function generateQuotationExcel(
     "Sub-Total",
   ];
   headerRow.font = { bold: true, color: { argb: "FFFFFF" } };
-  headerRow.fill = {
-    type: "pattern",
-    pattern: "solid",
-    fgColor: { argb: "4472C4" },
-  };
-  headerRow.alignment = { horizontal: "center", vertical: "middle" };
   headerRow.height = 20;
 
-  // Apply borders to header
+  // Apply styling to header cells (only columns A-F)
   for (let col = 1; col <= 6; col++) {
     const cell = headerRow.getCell(col);
+    cell.fill = {
+      type: "pattern",
+      pattern: "solid",
+      fgColor: { argb: "4472C4" },
+    };
+    cell.alignment = { horizontal: "center", vertical: "middle" };
     cell.border = {
       top: { style: "thin" },
       left: { style: "thin" },

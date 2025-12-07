@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { Plus } from "lucide-react";
+import QuotationsTable from "./quotations-table";
 
 export default async function QuotationsPage() {
   const quotations = await prisma.quotation.findMany({
@@ -65,12 +66,15 @@ export default async function QuotationsPage() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Date
                 </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {quotations.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-12 text-center">
+                  <td colSpan={8} className="px-6 py-12 text-center">
                     <div className="text-gray-500">
                       <p className="text-lg font-medium mb-2">
                         No quotations yet
@@ -89,50 +93,7 @@ export default async function QuotationsPage() {
                   </td>
                 </tr>
               ) : (
-                quotations.map((quotation) => (
-                  <tr key={quotation.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <Link
-                        href={`/quotations/${quotation.id}`}
-                        className="text-blue-600 hover:text-blue-800 font-medium"
-                      >
-                        {quotation.quotationNumber}
-                      </Link>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-900">
-                      <div className="max-w-xs truncate">
-                        {quotation.projectName}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {(quotation as any).customer?.companyName || "N/A"}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      AED{" "}
-                      {parseFloat(quotation.total.toString()).toLocaleString(
-                        "en-US",
-                        { minimumFractionDigits: 2 }
-                      )}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          statusColors[quotation.status]
-                        }`}
-                      >
-                        {quotation.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {(quotation as any).createdBy?.name || "System User"}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Date(quotation.createdAt).toLocaleDateString(
-                        "en-GB"
-                      )}
-                    </td>
-                  </tr>
-                ))
+                <QuotationsTable quotations={quotations} statusColors={statusColors} />
               )}
             </tbody>
           </table>

@@ -9,11 +9,11 @@ import {
   Users,
   Package,
   Settings,
-  LogOut,
   Menu,
   X,
 } from "lucide-react";
 import { useState } from "react";
+import { UserButton } from "@clerk/nextjs";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -84,29 +84,22 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 </Link>
               );
             })}
-
-            <Link
-              href="/settings"
-              className={`
-                flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors
-                ${
-                  pathname === "/settings"
-                    ? "bg-blue-50 text-blue-700"
-                    : "text-gray-700 hover:bg-gray-100"
-                }
-              `}
-              onClick={() => setSidebarOpen(false)}
-            >
-              <Settings className="mr-3 h-5 w-5" />
-              Settings
-            </Link>
           </nav>
 
-          {/* App Info */}
+          {/* User Profile */}
           <div className="border-t border-gray-200 p-4">
-            <div className="text-center text-sm text-gray-500">
-              <p className="font-medium text-gray-900 mb-1">Crystal Line</p>
-              <p className="text-xs">Quotation System v1.0</p>
+            <div className="flex items-center justify-center">
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: "h-10 w-10",
+                  },
+                }}
+              />
+            </div>
+            <div className="text-center text-xs text-gray-500 mt-3">
+              <p className="font-medium text-gray-900">Crystal Line</p>
+              <p>Quotation System v1.0</p>
             </div>
           </div>
         </div>
