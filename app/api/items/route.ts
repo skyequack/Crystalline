@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
-type ItemWhereInput =
-  NonNullable<Parameters<typeof prisma.itemCatalog.findMany>[0]>["where"];
+type ItemWhereInput = NonNullable<
+  Parameters<typeof prisma.itemCatalog.findMany>[0]
+>["where"];
 
 const itemSchema = z.object({
   category: z.enum(["GLASS", "ALUMINUM", "HARDWARE", "LABOR", "MISC"]),
