@@ -20,11 +20,7 @@ export const metadata: Metadata = {
   description: "Sign in to Crystal Line Quotation System",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function LoginPage() {
   return (
     <ClerkProvider>
       <html lang="en">
