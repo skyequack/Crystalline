@@ -93,7 +93,10 @@ export default async function QuotationsPage() {
                   </td>
                 </tr>
               ) : (
-                <QuotationsTable quotations={quotations} statusColors={statusColors} />
+                <QuotationsTable
+                  quotations={quotations}
+                  statusColors={statusColors}
+                />
               )}
             </tbody>
           </table>

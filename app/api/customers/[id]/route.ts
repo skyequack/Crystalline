@@ -24,10 +24,14 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  log.info("DELETE /api/customers/[id] - Request received", { customerId: params.id });
+  log.info("DELETE /api/customers/[id] - Request received", {
+    customerId: params.id,
+  });
   try {
-    log.info("Attempting to delete customer from database", { customerId: params.id });
-    
+    log.info("Attempting to delete customer from database", {
+      customerId: params.id,
+    });
+
     const customer = await prisma.customer.findUnique({
       where: { id: params.id },
     });
@@ -44,7 +48,10 @@ export async function DELETE(
       where: { id: params.id },
     });
 
-    log.info("Customer deleted successfully", { customerId: params.id, companyName: customer.companyName });
+    log.info("Customer deleted successfully", {
+      customerId: params.id,
+      companyName: customer.companyName,
+    });
     return NextResponse.json({ message: "Customer deleted successfully" });
   } catch (error) {
     log.error("Failed to delete customer", {

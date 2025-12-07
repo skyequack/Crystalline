@@ -206,11 +206,15 @@ export default function QuotationDetailPage({
       {/* Status and Details */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <div className="lg:col-span-2 bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold mb-4 text-black">Project Information</h2>
+          <h2 className="text-xl font-semibold mb-4 text-black">
+            Project Information
+          </h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-sm text-gray-500">Customer</p>
-              <p className="font-medium text-black">{quotation.customer.companyName}</p>
+              <p className="font-medium text-black">
+                {quotation.customer.companyName}
+              </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Contact Person</p>
@@ -220,19 +224,27 @@ export default function QuotationDetailPage({
             </div>
             <div>
               <p className="text-sm text-gray-500">Phone</p>
-              <p className="font-medium text-black">{quotation.customer.phone || "-"}</p>
+              <p className="font-medium text-black">
+                {quotation.customer.phone || "-"}
+              </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Email</p>
-              <p className="font-medium text-black">{quotation.customer.email || "-"}</p>
+              <p className="font-medium text-black">
+                {quotation.customer.email || "-"}
+              </p>
             </div>
             <div className="col-span-2">
               <p className="text-sm text-gray-500">Site Location</p>
-              <p className="font-medium text-black">{quotation.siteLocation || "-"}</p>
+              <p className="font-medium text-black">
+                {quotation.siteLocation || "-"}
+              </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Created By</p>
-              <p className="font-medium text-black">{quotation.createdBy.name}</p>
+              <p className="font-medium text-black">
+                {quotation.createdBy.name}
+              </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Date</p>
@@ -280,7 +292,9 @@ export default function QuotationDetailPage({
                 </option>
               </select>
               <button
-                onClick={() => handleStatusChange(pendingStatus ?? quotation.status)}
+                onClick={() =>
+                  handleStatusChange(pendingStatus ?? quotation.status)
+                }
                 disabled={savingStatus || pendingStatus === null}
                 className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
@@ -292,7 +306,7 @@ export default function QuotationDetailPage({
       </div>
 
       {/* Line Items */}
-        <div className="bg-white rounded-lg shadow mb-6">
+      <div className="bg-white rounded-lg shadow mb-6">
         <div className="px-6 py-4 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-black">Line Items</h2>
         </div>
@@ -399,9 +413,12 @@ export default function QuotationDetailPage({
       {deleteConfirm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <h2 className="text-2xl font-bold mb-4 text-red-600">Delete Quotation</h2>
+            <h2 className="text-2xl font-bold mb-4 text-red-600">
+              Delete Quotation
+            </h2>
             <p className="text-gray-700 mb-6">
-              Are you sure you want to delete this quotation? This action cannot be undone.
+              Are you sure you want to delete this quotation? This action cannot
+              be undone.
             </p>
             <div className="flex justify-end space-x-3">
               <button

@@ -25,7 +25,10 @@ interface QuotationsTableProps {
   statusColors: Record<string, string>;
 }
 
-export default function QuotationsTable({ quotations, statusColors }: QuotationsTableProps) {
+export default function QuotationsTable({
+  quotations,
+  statusColors,
+}: QuotationsTableProps) {
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const router = useRouter();
 
@@ -60,19 +63,16 @@ export default function QuotationsTable({ quotations, statusColors }: Quotations
             </Link>
           </td>
           <td className="px-6 py-4 text-sm text-black">
-            <div className="max-w-xs truncate">
-              {quotation.projectName}
-            </div>
+            <div className="max-w-xs truncate">{quotation.projectName}</div>
           </td>
           <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
             {quotation.customer?.companyName || "N/A"}
           </td>
           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
             AED{" "}
-            {parseFloat(quotation.total.toString()).toLocaleString(
-              "en-US",
-              { minimumFractionDigits: 2 }
-            )}
+            {parseFloat(quotation.total.toString()).toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+            })}
           </td>
           <td className="px-6 py-4 whitespace-nowrap">
             <span
@@ -87,9 +87,7 @@ export default function QuotationsTable({ quotations, statusColors }: Quotations
             {quotation.createdBy?.name || "System User"}
           </td>
           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-            {new Date(quotation.createdAt).toLocaleDateString(
-              "en-GB"
-            )}
+            {new Date(quotation.createdAt).toLocaleDateString("en-GB")}
           </td>
           <td className="px-6 py-4 whitespace-nowrap text-sm">
             <button
@@ -109,9 +107,12 @@ export default function QuotationsTable({ quotations, statusColors }: Quotations
           <td colSpan={8}>
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
               <div className="bg-white rounded-lg max-w-md w-full p-6">
-                <h2 className="text-2xl font-bold mb-4 text-red-600">Delete Quotation</h2>
+                <h2 className="text-2xl font-bold mb-4 text-red-600">
+                  Delete Quotation
+                </h2>
                 <p className="text-gray-700 mb-6">
-                  Are you sure you want to delete this quotation? This action cannot be undone.
+                  Are you sure you want to delete this quotation? This action
+                  cannot be undone.
                 </p>
                 <div className="flex justify-end space-x-3">
                   <button
