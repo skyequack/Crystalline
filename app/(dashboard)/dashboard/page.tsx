@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { FileText, Users, Package, TrendingUp } from "lucide-react";
-import type { Quotation, Customer } from "@prisma/client";
 
 export default async function DashboardPage() {
   // Fetch statistics
@@ -144,7 +143,7 @@ export default async function DashboardPage() {
                 </tr>
               ) : (
                 recentQuotations.map(
-                  (quotation: Quotation & { customer: Customer }) => (
+                  (quotation: any) => (
                     <tr key={quotation.id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <Link
